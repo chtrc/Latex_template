@@ -10,7 +10,7 @@ Run `make` to compile the `.tex` file and run `make clean` to remove the interme
 [pre](./pre): Presentation templates which can replace `MS-PPT` and `keynote`.  
 [report](./report): Experimental report for ZJUers.  
 [hw-project](./hw-project): Useful templates for courses project.  
-[zjuthesis](./zjuthesis): Thesis for ZJUers.  
+[zjuthesis](./zjuthesis): Thesis for ZJUers. It is a copy of [zjuthesis](https://github.com/TheNetAdmin/zjuthesis).   
 [zjuthesisi-word](./zjuthesis-word): Thesis of `MS-Word` for ZJUers.   
 
 
