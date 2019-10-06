@@ -1,11 +1,28 @@
 % Set page layout
-\geometry{
-    a4paper,
-    marginpar=0pt,
-    includeheadfoot,
-    vmargin={21mm,12mm},
-    hmargin={25mm,20mm},
-    headsep=4mm
+\ifthenelse{\equal{\Degree}{undergraduate}}
+{
+    \geometry{
+        a4paper,
+        marginpar=0pt,
+        includeheadfoot,
+        vmargin={1in,1in},
+        hmargin={1.25in,1.25in},
+        headsep=4mm
+    }
+}
+{
+    \geometry{
+        a4paper,
+        top=51pt,
+        bottom=51pt,
+        left=68pt,
+        right=57pt,
+        headsep=14pt,
+        footskip=26pt,
+        footnotesep=10.8pt plus 1fil minus 2.0pt,
+        includehead,
+        includefoot
+    }
 }
 
 % 1.5 linespread, using Microsoft Word's rule
@@ -13,34 +30,105 @@
 
 % Enable subsubsection's numbering
 \setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
 
-% Header & Footer
-\pagestyle{fancy}
-\fancyhead{}
-\fancyfoot{}
-\fancyhead[EL]{\zihao{-5} 浙江大学本科生毕业论文（设计）}
-\fancyhead[OR]{\zihao{-5} \Title}
-\fancyfoot[OC,EC]{\zihao{-5} \thepage}
-\renewcommand{\headrulewidth}{0.6pt}
-
-\assignpagestyle{\chapter}{fancy}
-
-\fancypagestyle{index}
+% Cover
+\fancypagestyle{cover}
 {
     \fancyhead{}
     \fancyfoot{}
-    \fancyhead[EL]{\zihao{-5} 浙江大学本科生毕业论文（设计）}
-    \fancyhead[OR]{\zihao{-5} \Title}
+    \renewcommand{\headrulewidth}{0pt}
 }
-\tocloftpagestyle{index}
 
-% Table of content title format
-\renewcommand{\cfttoctitlefont}{\hfill\zihao{3}\bfseries}
+\ifthenelse{\equal{\Degree}{undergraduate}}
+{
+    % Common header & footer
+    \newcommand{\commonhead}
+    {
+        \fancyhead{}
+        \fancyhead[EL]{\zihao{-5} \TitleTypeName}
+        \fancyhead[OR]{\zihao{-5} \Title}
+        \renewcommand{\headrulewidth}{0.6pt}
+    }
+    % Common page header & footer
+    \fancypagestyle{common}
+    {
+        \commonhead{}
+        \fancyfoot{}
+        \fancyfoot[OC,EC]{\zihao{-5} \thepage}
+    }
+    % Previous part header & footer
+    \fancypagestyle{previous}
+    {
+        \commonhead{}
+        \fancyfoot{}
+        \fancyfoot[OC,EC]{\zihao{-5}\Roman{page}}
+    }
+}
+{
+    \newcommand{\commonhead}
+    {
+        \fancyhead{}
+        \fancyhead[L]{\zihao{-5} \TitleTypeName}
+        \fancyhead[R]{\zihao{-5} \leftmark}
+        \renewcommand{\headrulewidth}{0.6pt}
+    }
+    \fancypagestyle{common}
+    {
+        \commonhead{}
+        \fancyfoot{}
+        \fancyfoot[OR,EL]{\zihao{-5} \thepage}
+    }
+    \fancypagestyle{previous}
+    {
+        \fancyhead{}
+        \fancyfoot{}
+        \fancyfoot[OR,EL]{\zihao{-5}\Roman{page}}
+        \renewcommand{\headrulewidth}{0pt}
+    }
+}
+
+% Explicitly remove plain page style
+\fancypagestyle{plain}
+{
+    \fancyhead{}
+    \fancyfoot{}
+    \renewcommand{\headrulewidth}{0pt}
+}
+
+% Set default page styles
+\pagestyle{common}
+\assignpagestyle{\chapter}{common}
+\tocloftpagestyle{previous}
+
+% TOC side pane fixup
+\bookmarksetup{
+  numbered,
+  open
+}
+
+% TOC title format
+\ifthenelse{\equal{\Degree}{undergraduate}}
+{
+    \renewcommand{\cfttoctitlefont}{\hfill\zihao{3}\bfseries}
+}
+{
+    \renewcommand{\cfttoctitlefont}{\hfill\zihao{3}}
+}
 \renewcommand{\cftaftertoctitle}{\hfill}
+
 \setlength{\cftbeforetoctitleskip}{0pt}
 \setlength{\cftaftertoctitleskip}{0pt}
 
-% Set TOC layout
+\setlength{\cftbeforeloftitleskip}{0pt}
+\setlength{\cftafterloftitleskip}{0pt}
+
+\setlength{\cftbeforelottitleskip}{0pt}
+\setlength{\cftafterlottitleskip}{0pt}
+
+% TOC entry format
+\cftpagenumbersoff{part}
+
 \renewcommand{\cftchapfont}         {\zihao{-4}}
 \renewcommand{\cftchapleader}       {\cftdotfill{\cftchapdotsep}}
 \renewcommand{\cftchappagefont}     {}
@@ -48,6 +136,8 @@
 \renewcommand{\cftsubsecfont}       {\zihao{-4}}
 \renewcommand{\cftsubsubsecfont}    {\zihao{-4}}
 
+\renewcommand{\cftfigdotsep}        {0.5}
+\renewcommand{\cfttabdotsep}        {0.5}
 \renewcommand{\cftchapdotsep}       {0.5}
 \renewcommand{\cftsecdotsep}        {0.5}
 \renewcommand{\cftsubsecdotsep}     {0.5}
@@ -58,8 +148,47 @@
 \renewcommand{\cftsubsecnumwidth}     {1.5em}
 \renewcommand{\cftsubsubsecnumwidth}  {1.5em}
 
+\ifthenelse{\equal{\Degree}{undergraduate}}
+{
+    \setlength{\cftchapindent}      {0em}
+    \setlength{\cftsecindent}       {2em}
+    \setlength{\cftsubsecindent}    {4em}
+    \setlength{\cftsubsubsecindent} {6em}
+}
+{
+    \setlength{\cftchapindent}      {0em}
+    \setlength{\cftsecindent}       {0em}
+    \setlength{\cftsubsecindent}    {0em}
+    \setlength{\cftsubsubsecindent} {0em}
+    \setlength{\cftbeforechapskip}  {0em}
+}
+
+% graduate template listoffigures/tables
+\ifthenelse{\equal{\Degree}{graduate}}
+{
+    % listoffigures
+    \newlength{\listoffiguresnamelen}
+    \renewcommand{\cftfigpresnum}{\figurename\enspace}
+    \settowidth{\listoffiguresnamelen}{\cftfigpresnum\cftfigaftersnum}
+    \addtolength{\cftfignumwidth}{\listoffiguresnamelen}
+    % listoftables
+    \newlength{\listoftablesnamelen}
+    \renewcommand{\cfttabpresnum}{\tablename\enspace}
+    \settowidth{\listoftablesnamelen}{\cfttabpresnum\cfttabaftersnum}
+    \addtolength{\cfttabnumwidth}{\listoftablesnamelen}
+}
+{}
+
 % Change biblography title style for `biblatex`
-\defbibheading{bibliography}[\bibname]{
-    \section{#1}
-    \markboth{#1}{#1}
+\ifthenelse{\equal{\Degree}{undergraduate}}
+{
+    \defbibheading{bibliography}[\bibname]{
+        \section{#1}
+        \markboth{#1}{#1}
+    }
+}
+{
+    \defbibheading{bibliography}[\bibname]{
+        \chapternonum{#1}
+    }
 }
